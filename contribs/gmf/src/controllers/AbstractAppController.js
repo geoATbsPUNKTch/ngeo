@@ -723,18 +723,11 @@ gmf.controllers.AbstractAppController.module = angular.module('GmfAbstractAppCon
   ngeo.query.MapQuerent.module.name,
   ngeo.query.mapQueryComponent.name,
   ngeo.statemanager.module.name,
-]);
-
-
-gmf.controllers.AbstractAppController.module.controller('AbstractController', gmf.controllers.AbstractAppController);
-
-
-gmf.controllers.AbstractAppController.module.value('ngeoExportFeatureFormats', [
+]).value('ngeoExportFeatureFormats', [
   ngeo.misc.FeatureHelper.FormatType.KML,
   ngeo.misc.FeatureHelper.FormatType.GPX
-]);
-
-gmf.controllers.AbstractAppController.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+]).config([
+  'tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
    * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.

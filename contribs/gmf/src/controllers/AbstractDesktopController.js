@@ -231,17 +231,7 @@ gmf.controllers.AbstractDesktopController.module = angular.module('GmfAbstractDe
   gmf.raster.component.name,
   ngeo.draw.features.name,
   ngeo.query.bboxQueryComponent,
-]);
-
-gmf.controllers.AbstractDesktopController.module.controller(
-  'AbstractDesktopController',
-  gmf.controllers.AbstractDesktopController);
-
-gmf.controllers.AbstractDesktopController.module.value('isDesktop', true);
-
-gmf.controllers.AbstractDesktopController.module.value('ngeoQueryOptions', {
-  'limit': 20
-});
-
-gmf.controllers.AbstractDesktopController.module.value('ngeoMeasurePrecision', 3);
-gmf.controllers.AbstractDesktopController.module.value('ngeoMeasureDecimals', 0);
+]).value('isDesktop', true)
+  .value('ngeoQueryOptions', {'limit': 20})
+  .value('ngeoMeasurePrecision', 3)
+  .value('ngeoMeasureDecimals', 0);

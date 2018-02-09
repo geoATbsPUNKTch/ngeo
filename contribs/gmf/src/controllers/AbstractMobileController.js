@@ -202,12 +202,5 @@ gmf.controllers.AbstractMobileController.module = angular.module('GmfAbstractMob
   gmf.mobile.navigation.module.name,
   gmf.query.windowComponent.name,
   ngeo.geolocation.mobile.name,
-]);
-
-gmf.controllers.AbstractMobileController.module.controller('AbstractMobileController', gmf.controllers.AbstractMobileController);
-
-gmf.controllers.AbstractMobileController.module.value('isMobile', true);
-
-gmf.controllers.AbstractMobileController.module.value('ngeoQueryOptions', {
-  'tolerance': 10
-});
+]).value('isMobile', true)
+  .value('ngeoQueryOptions', {'tolerance': 10});
