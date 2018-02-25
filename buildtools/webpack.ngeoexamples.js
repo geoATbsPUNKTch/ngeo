@@ -18,7 +18,7 @@ for (const filename of ls('examples/*.html')) {
     }),
   );
 }
-plugins.push(new webpack.optimize.splitChunks({
+plugins.push(new webpack.optimize.SplitChunksPlugin({
   from: Object.keys(entry),
   to: 'common',
   test: [/node_modules/, /src/],
