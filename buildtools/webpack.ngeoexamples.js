@@ -18,7 +18,7 @@ for (const filename of ls('examples/*.html')) {
     }),
   );
 }
-plugins.push(new webpack.optimize.CommonsChunkPlugin({
+plugins.push(new webpack.optimization.splitChunks({
   from: Object.keys(entry),
   to: 'common',
   test: [/node_modules/, /src/],
