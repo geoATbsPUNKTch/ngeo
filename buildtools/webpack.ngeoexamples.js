@@ -18,16 +18,17 @@ for (const filename of ls('examples/*.html')) {
     }),
   );
 }
-plugins.push(new webpack.optimize.SplitChunksPlugin({
-  from: Object.keys(entry),
-  to: 'common',
-  test: [/node_modules/, /src/],
-}));
 
 module.exports = {
   output: {
     path: path.resolve(__dirname, '../.build/examples-hosted/'),
   },
+  optimization: {
+    splitChunks: {
+      chunks: Object.keys(entry),
+      name: 'commons',
+    }
+  }
   entry: entry,
   plugins: plugins,
 };

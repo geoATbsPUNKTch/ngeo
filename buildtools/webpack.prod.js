@@ -66,13 +66,15 @@ module.exports = {
       gmfExamplesRule,
     ]
   },
-  plugins: [
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: true,
-    }),
-  ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      })
+    ]
+  },
   resolve: {
     alias: {
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.prod.js'),
