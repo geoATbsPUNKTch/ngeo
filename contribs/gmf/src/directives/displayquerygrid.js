@@ -212,7 +212,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
 
   /**
    * @type {!gmfx.GridMergeTabs}
-   * @private
+   * @export
    */
   this.mergeTabs_ = {};
 
