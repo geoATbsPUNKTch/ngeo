@@ -99,7 +99,8 @@ gmf.layertreeComponent = {
   bindings: {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
-    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow'
+    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
+    'isExpanded': '<?mapbsIsexpanded'
   },
   template: gmfLayertreeTemplate
 };
@@ -134,6 +135,11 @@ gmf.LayertreeController = function($element, $http, $sce, $scope, ngeoCreatePopu
   ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
   gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
 
+  /**
+   * opens Layertree Nodes allways expanded
+   * @type {boolean} 
+   * @export*/
+  this.isExpanded;
   /**
    * @type {?ol.Map}
    * @export
