@@ -1106,6 +1106,8 @@ gmf.PrintController.prototype.getSetScale = function(opt_scale) {
     const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
     const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
     this.map.getView().setResolution(contrainRes);
+    // Render the map to update the postcompose mask manually
+    this.map.render();
     this.scaleManuallySelected_ = true;
   }
   return this.layoutInfo.scale;
