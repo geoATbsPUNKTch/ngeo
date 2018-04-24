@@ -496,8 +496,11 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
   const url = item.wfsConfig.url;
 
   item.requestDeferred = this.q_.defer();
-
-  this.http_.post(url, featureRequest, {timeout: item.requestDeferred.promise})
+  var conf = {
+    timeout: item.requestDeferred.promise,
+    headers: {'Content-Type': 'text/xml; charset=UTF-8'}
+  }; 
+  this.http_.post(url, featureRequest, conf)
     .then((response) => {
       // (1) Unset requestDeferred
       item.requestDeferred = null;
