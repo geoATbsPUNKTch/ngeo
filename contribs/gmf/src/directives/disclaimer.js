@@ -247,14 +247,15 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
     }, this);
 
   } else {
+    this.eventHelper_.addListenerKey(
+      layerUid,
+      ol.events.listen(
+        layer,
+        "propertychange",
+        this.handleLayersDisplay,
+        this)
+    )
 
-    // Show disclaimer messages for this layer
-    const disclaimers = layer.get('disclaimers');
-    if (disclaimers && Array.isArray(disclaimers)) {
-      disclaimers.forEach(function(disclaimer) {
-        this.showDisclaimerMessage_(disclaimer);
-      }, this);
-    }
   }
 };
 
@@ -335,5 +336,39 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
   }
 };
 
+/**
+ * 
+ * @param {*} evt 
+ */
+gmf.DisclaimerController.prototype.handleLayersDisplay = function(evt) {
+  if (evt.key === 'visible') {
+    let layer = evt.target;
+    let isVisible = layer.get('visible');
+
+    if (isVisible)
+      this.showDisclaimerMessageOnShow(layer);
+    else {
+      const disclaimers = layer.get('disclaimers');
+      if (disclaimers && Array.isArray(disclaimers)) {
+        disclaimers.forEach(function(disclaimer) {
+          this.closeDisclaimerMessage_(disclaimer);
+        }, this);
+      }
+    }
+  }
+}
+
+/** 
+ * @param {ol.layer.Base} layer - the layer 
+ */
+gmf.DisclaimerController.prototype.showDisclaimerMessageOnShow = function(layer) {
+  // Show disclaimer messages for this layer
+  const disclaimers = layer.get('disclaimers');
+  if (disclaimers && Array.isArray(disclaimers)) {
+    disclaimers.forEach(function(disclaimer) {
+      this.showDisclaimerMessage_(disclaimer);
+    }, this);
+  }
+}
 
 gmf.module.controller('GmfDisclaimerController', gmf.DisclaimerController);
