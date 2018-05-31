@@ -760,6 +760,7 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
     }
     const fillStyle = style.getFill();
     if (fillStyle) {
+      fillColor[3] = fillStyle.getColor()[3];
       fillStyle.setColor(fillColor);
     }
     const image = style.getImage();
