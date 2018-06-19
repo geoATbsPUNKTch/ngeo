@@ -174,7 +174,7 @@ ngeo.interaction.Measure = function(opt_options) {
     this.startMsg = options.startMsg;
   } else {
     this.startMsg = document.createElement('span');
-    this.startMsg.textContent =  'Click to start drawing.';
+    this.startMsg.textContent = 'Click to start drawing.';
   }
 
   /**
@@ -416,9 +416,11 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   this.changeEventKey_ = ol.events.listen(geometry, 'change', () => {
     this.handleMeasure((measure, coord) => {
       if (coord !== null) {
-        this.measureTooltipElement_.innerHTML = measure;
         this.measureTooltipOverlayCoord_ = coord;
       }
+      // svagap: changed tooltip only updated if not null nor empty
+      if (measure.length > 0)
+        this.measureTooltipElement_.innerHTML = measure;
     });
   });
 
