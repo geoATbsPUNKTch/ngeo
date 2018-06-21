@@ -38,7 +38,7 @@ ngeo.WfsPermalinkData;
  * permalink functionality.
  */
 ngeo.module.value('ngeoWfsPermalinkOptions',
-  /** @type {ngeox.WfsPermalinkOptions} */ ({
+  /** @type {ngeox.WfsPermalinkOptions} */({
     url: '', wfsTypes: [], defaultFeatureNS: '', defaultFeaturePrefix: ''
   }));
 
@@ -92,7 +92,7 @@ ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions, ng
   const options = ngeoWfsPermalinkOptions;
 
   this.locationService = ngeoLocation;
-  
+
   /**
    * @type {string}
    * @private
@@ -168,7 +168,7 @@ ngeo.WfsPermalink.prototype.clear = function() {
 ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
   goog.asserts.assert(this.url_,
     'url is not set. to use the wfs permalink service, ' +
-      'set the value `ngeoWfsPermalinkOptions`');
+    'set the value `ngeoWfsPermalinkOptions`');
   this.clearResult_();
 
   const typeName = queryData.wfsType;
@@ -218,15 +218,16 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
     }
 
     let zoom = this.pointRecenterZoom_;
-    if(this.locationService.hasParam('map_zoom'))
-      zoom = this.locationService.getParam('map_zoom');
+    if (this.locationService.hasParam('map_zoom')) {
+      zoom = Number(this.locationService.getParam('map_zoom'));
+    }
 
     // zoom to features
     const size = map.getSize();
     if (size !== undefined) {
       const maxZoom = zoom;
       const padding = [10, 10, 10, 10];
-      map.getView().fit(this.getExtent_(features), {size, maxZoom, padding});
+      map.getView().fit(this.getExtent_(features), /** @type {olx.view.FitOptions} */ ({size, maxZoom, padding}));
     }
 
     // then show if requested
