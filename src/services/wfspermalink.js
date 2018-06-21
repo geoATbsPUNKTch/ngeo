@@ -82,14 +82,17 @@ ngeo.module.value('ngeoWfsPermalinkOptions',
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
+ * @param {ngeo.Location} ngeoLocation
  * @ngdoc service
  * @ngname ngeoWfsPermalink
  * @ngInject
  */
-ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
+ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions, ngeoLocation) {
 
   const options = ngeoWfsPermalinkOptions;
 
+  this.locationService = ngeoLocation;
+  
   /**
    * @type {string}
    * @private
@@ -214,10 +217,14 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
       return;
     }
 
+    let zoom = this.pointRecenterZoom_;
+    if(this.locationService.hasParam('map_zoom'))
+      zoom = this.locationService.getParam('map_zoom');
+
     // zoom to features
     const size = map.getSize();
     if (size !== undefined) {
-      const maxZoom = this.pointRecenterZoom_;
+      const maxZoom = zoom;
       const padding = [10, 10, 10, 10];
       map.getView().fit(this.getExtent_(features), {size, maxZoom, padding});
     }
