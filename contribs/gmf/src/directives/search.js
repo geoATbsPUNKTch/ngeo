@@ -142,7 +142,8 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'additionalListeners': '=gmfSearchListeners',
       'maxZoom': '<gmfSearchMaxzoom',
       'delay': '<gmfSearchDelay',
-      'onInitCallback': '&?gmfSearchOnInit'
+      'onInitCallback': '&?gmfSearchOnInit',
+      'searchActionCallback': '&?mapbsActionCallback'
     },
     controller: 'GmfSearchController as ctrl',
     templateUrl: gmfSearchTemplateUrl,
@@ -244,6 +245,8 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
    * @private
    */
   this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
+
+  this.searchActionCallback = this.scope_['searchActionCallback']();
 
   /**
    * @type {ngeo.FeatureOverlayMgr}
@@ -455,7 +458,7 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
    */
   this.listeners = this.mergeListeners_(
     this.scope_['additionalListeners'],
-    /** @type {ngeox.SearchDirectiveListeners} */ ({
+    /** @type {ngeox.SearchDirectiveListeners} */({
       select: gmf.SearchController.select_.bind(this),
       close: gmf.SearchController.close_.bind(this),
       datasetsempty: gmf.SearchController.datasetsempty_.bind(this)
@@ -555,7 +558,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         let html = `<p class="gmf-search-label" translate>${
           feature.get(config.labelKey)}</p>`;
         html += `<p class="gmf-search-group" translate>${feature.get('layer_name') ||
-                config.datasetTitle}</p>`;
+          config.datasetTitle}</p>`;
         html = `<div class="gmf-search-datum">${html}</div>`;
         return compile(html)(scope);
       }
@@ -576,10 +579,10 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
  */
 gmf.SearchController.prototype.filterAction_ = function(action) {
   return (
-  /**
-       * @param {GeoJSONFeature} feature
-       * @return {boolean}
-       */
+    /**
+         * @param {GeoJSONFeature} feature
+         * @return {boolean}
+         */
     function(feature) {
       const properties = feature['properties'];
       if (properties['actions']) {
@@ -603,10 +606,10 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
  */
 gmf.SearchController.prototype.filterLayername_ = function(opt_layerName) {
   return (
-  /**
-       * @param {GeoJSONFeature} feature
-       * @return {boolean}
-       */
+    /**
+         * @param {GeoJSONFeature} feature
+         * @return {boolean}
+         */
     function(feature) {
       const featureLayerName = feature['properties']['layer_name'];
       // Keep only layers with layer_name (don't keep action layers).
@@ -871,7 +874,7 @@ gmf.SearchController.select_ = function(event, suggestion, dataset) {
 gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset) {
   const actions = feature.get('actions');
   const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
-      (feature.getGeometry());
+    (feature.getGeometry());
   if (actions) {
     for (let i = 0, ii = actions.length; i < ii; i++) {
       const action = actions[i];
@@ -899,6 +902,9 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
           const silent = !!featureGeometry;
           this.gmfTreeManager_.addGroupByLayerName(actionData, true, silent);
         }
+      } else {
+        if (this.searchActionCallback)
+          this.searchActionCallback(action);
       }
     }
   }
@@ -912,7 +918,8 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
       featureGeometry.getExtent() : featureGeometry;
     view.fit(fitArray, {
       size: this.map_.getSize(),
-      maxZoom: this.maxZoom});
+      maxZoom: this.maxZoom
+    });
   }
   this.leaveSearch_();
 };
