@@ -246,7 +246,7 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
    */
   this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
-  this.searchActionCallback = this.scope_['searchActionCallback']();
+  this.searchActionCallback = this.scope_['searchActionCallback'] ? this.scope_['searchActionCallback']() : null;
 
   /**
    * @type {ngeo.FeatureOverlayMgr}
