@@ -769,9 +769,9 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
     const image = style.getImage();
     if (image) {
       style.setImage(new ol.style.Circle({
-        fill: new ol.style.Fill({color: fillColor}),
-        radius: 5,
-        stroke: new ol.style.Stroke({color: strokeColor})
+        fill: fillStyle,
+        radius: image.getRadius(),
+        stroke: strokeStyle
       }));
     }
   }
