@@ -655,14 +655,16 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
     prepare(query, settings) {
       const url = settings.url;
       const lang = gettextCatalog.currentLanguage;
-      const interfaceName = 'mobile'; // FIXME dynamic interfaces
+      // SVAREG : Removed because we do not want the mobile interface for all requests !!!
+      // const interfaceName = 'mobile'; // FIXME dynamic interfaces
       settings.xhrFields = {
         withCredentials: true
       };
       settings.url = ol.uri.appendParams(url, {
         'query': query,
-        'lang': lang,
-        'interface': interfaceName
+        'lang': lang //,
+        // SVAREG : Removed because we do not want the mobile interface for all requests !!!
+        // 'interface': interfaceName
       });
       return settings;
     }
