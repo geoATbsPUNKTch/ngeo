@@ -2,6 +2,7 @@
     class="form-group"
     ng-switch="fsCtrl.filtrableDataSources.length">
   <span ng-switch-when="0" translate>No filtrable layer available!</span>
+  <p ng-switch-when="0" translate>Filterbare Ebenen müssen im Layerbaum geladen werden, bevor diese zur Auswahl zur Verfügung stehen.</p>
   <select
       class="form-control"
       ng-disabled="fsCtrl.aRuleIsActive"
@@ -134,5 +135,7 @@
       </div>
     </div>
   </ngeo-modal>
-  <span translate>Filterbare Ebenen müssen im Layerbaum geladen werden, bevor diese zur Auswahl zur Verfügung stehen.</span>
+
+
+  
 </div>
