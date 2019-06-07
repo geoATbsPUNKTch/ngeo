@@ -835,6 +835,15 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       symbolizer.labelYOffset = -textStyle.getOffsetY();
     }
 
+    // SVAREG : Allow label overlapping by default here
+    // And reset offset to 0 because of bug #969
+    // (conflictResolution value is not taken in account if labelYOffset is set)
+    // https://github.com/mapfish/mapfish-print/issues/969
+    // 1 other change in externs\mapfish-print-v3.js
+    symbolizer.conflictResolution = false;
+    symbolizer.labelXOffset = 0;
+    symbolizer.labelYOffset = 0;
+
     symbolizers.push(symbolizer);
   }
 };
