@@ -621,9 +621,14 @@ MapFishPrintSymbolizerText.prototype.haloRadius;
  */
 MapFishPrintSymbolizerText.prototype.fontColor;
 
-// SVAREG : Define new attribute here in order to allow label overlapping 
+// SVAREG : Define 2 new attributes here in order to allow label overlapping 
 // 1 other change in src\services\print.js
 /**
  * @type {boolean}
  */
 MapFishPrintSymbolizerText.prototype.conflictResolution;
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerText.prototype.goodnessOfFit;

@@ -839,10 +839,14 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     // And reset offset to 0 because of bug #969
     // (conflictResolution value is not taken in account if labelYOffset is set)
     // https://github.com/mapfish/mapfish-print/issues/969
+    // and set goodnessOfFit too 
+    // (Label not printed even if conflictResolution is set to false)
+    // https://github.com/mapfish/mapfish-print/issues/981
     // 1 other change in externs\mapfish-print-v3.js
     symbolizer.conflictResolution = false;
     symbolizer.labelXOffset = 0;
     symbolizer.labelYOffset = 0;
+    symbolizer.goodnessOfFit = 0;
 
     symbolizers.push(symbolizer);
   }
